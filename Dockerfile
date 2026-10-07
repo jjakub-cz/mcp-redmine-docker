@@ -32,14 +32,8 @@ RUN pip install --no-cache-dir uv \
 # If EXTRA_CA_CERT_URL is set, download the DER certificate and append it to the certifi bundle.
 # This is needed when your Redmine server sends an incomplete TLS chain.
 RUN if [ -n "${EXTRA_CA_CERT_URL}" ]; then \
-        EXTRA_CA_CERT_URL="${EXTRA_CA_CERT_URL}" uv run python -c "
-import base64, urllib.request, certifi, os
-url = os.environ['EXTRA_CA_CERT_URL']
-der = urllib.request.urlopen(url).read()
-pem = b'-----BEGIN CERTIFICATE-----\n' + base64.encodebytes(der) + b'-----END CERTIFICATE-----\n'
-open(certifi.where(), 'ab').write(pem)
-print('CA cert added from', url)
-"; \
+        EXTRA_CA_CERT_URL="${EXTRA_CA_CERT_URL}" uv run python -c \
+        "import base64,urllib.request,certifi,os; url=os.environ['EXTRA_CA_CERT_URL']; der=urllib.request.urlopen(url).read(); pem=b'-----BEGIN CERTIFICATE-----\n'+base64.encodebytes(der)+b'-----END CERTIFICATE-----\n'; open(certifi.where(),'ab').write(pem)"; \
     fi
 
 # Security: upgrade packages with known CVEs that upstream uv.lock may pin to older versions.

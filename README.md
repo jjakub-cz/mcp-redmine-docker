@@ -45,8 +45,8 @@ ghcr.io/jjakub-cz/mcp-redmine-docker:latest
 
 To upgrade to a newer upstream commit:
 1. Find the commit SHA you want from [runekaagaard/mcp-redmine](https://github.com/runekaagaard/mcp-redmine/commits/main/)
-2. Create a new GitHub release in this repo with that SHA as the tag name
-3. CI builds and publishes the image automatically
+2. Create a new GitHub release in this repo with the **first 7–12 characters** of that SHA as the tag name (e.g. `0d63b44`). GitHub does not allow full 40-character SHA strings as tag names.
+3. CI builds and publishes the image automatically — `git checkout <short-sha>` resolves correctly inside the Docker build.
 
 ## Build locally
 
