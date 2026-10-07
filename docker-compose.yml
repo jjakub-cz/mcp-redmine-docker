@@ -1,0 +1,15 @@
+services:
+  mcp-redmine:
+    image: ghcr.io/jjakub-cz/mcp-redmine-docker:${TAG:-latest}
+    container_name: mcp-redmine
+    environment:
+      REDMINE_URL: ${REDMINE_URL}
+      REDMINE_API_KEY: ${REDMINE_API_KEY}
+      # REDMINE_DANGEROUSLY_ACCEPT_INVALID_CERTS: "1"
+      # REDMINE_ALLOWED_DIRECTORIES: "/tmp/redmine-files"
+      # REDMINE_HEADERS: "X-Custom-Header: value"
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
